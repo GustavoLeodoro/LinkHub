@@ -1,0 +1,76 @@
+﻿@model LoginModel
+
+@{
+	Layout = "_LayoutLogin";
+    ViewData["Title"] = "Login";
+}
+
+<br />
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">x</button>
+        <i class="bi bi-check-circle"></i>
+        @TempData["MensagemSucesso"]
+    </div>
+}
+
+    @if (TempData["MensagemErro"] != null)
+    {
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">x</button>
+        <i class="bi bi-bug"></i>
+            @TempData["MensagemErro"]
+    </div>
+
+    }
+
+
+<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
+  <div class="modal-dialog">
+    <div class="modal-content rounded-4 shadow">
+      <div class="modal-header p-5 pb-4 border-bottom-0">
+                <h1 class="fw-bold mb-0 fs-2">
+                    Entrar com sua conta
+                </h1>
+        
+      </div>
+
+      <div class="modal-body p-5 pt-0">
+        <form class="" asp-controller="Login" asp-action="Entrar" method="post">
+          <div class="form-floating mb-3">
+            <input type="text" asp-for="Login" class="form-control rounded-3" id="login" placeholder="name@example.com">
+            <label for="login">Login</label>
+          </div>
+          @Html.ValidationMessageFor(x => x.Login)
+          <div class="form-floating mb-3">
+            <input type="password" asp-for="Senha" class="form-control rounded-3" id="senha" placeholder="Digite a sua senha">
+            <label for="senha">Senha</label>
+          </div>
+                    @Html.ValidationMessageFor(x => x.Senha)
+          <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Sign up</button>
+          <br />
+          <p class="mb-4 text-sm-center mx-auto">
+              Esqueceu sua senha?
+              <a asp-action="RedefinirSenha" asp-controller="Login" class="text-primary text-gradient font-weight-bold">Redefinir minha senha</a>
+          </p>
+          <hr class="my-4">
+          <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2>
+          <button class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3" type="submit">
+                        <svg class="bi me-1" width="16" height="16" aria-hidden="true"><i class="bi bi-google"></i><use xlink:href="#google" /></svg>
+             Sign up with Google
+          </button>
+          <button class="w-100 py-2 mb-2 btn btn-outline-primary rounded-3" type="submit">
+                        <svg class="bi me-1" width="16" height="16" aria-hidden="true"><i class="bi bi-facebook"></i><use xlink:href="#facebook" /></svg>
+            Sign up with Facebook
+          </button>
+          <button class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3" type="submit">
+                        <svg class="bi me-1" width="16" height="16" aria-hidden="true"><i class="bi bi-github"></i><use xlink:href="#github" /></svg>
+            Sign up with GitHub
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

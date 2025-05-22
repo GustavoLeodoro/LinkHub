@@ -1,0 +1,137 @@
+﻿@using LinkHub.Enum
+@model AlterarSenhaModel
+
+@{
+    ViewData["Title"] = "Alterar senha";
+}
+
+<!-- Estilos personalizados -->
+<style>
+    body {
+        background-color: #f8f9fa;
+        color: #212529;
+    }
+
+    .form-container {
+        max-width: 600px;
+        margin: 40px auto;
+        background-color: #ffffff;
+        padding: 30px;
+        border: 1px solid #ced4da;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    .form-title {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #6f42c1;
+        margin-bottom: 30px;
+    }
+
+    .btn-purple {
+        background-color: #7c3aed;
+        border-color: #7c3aed;
+        color: white;
+    }
+
+        .btn-purple:hover {
+            background-color: #6b21a8;
+            border-color: #6b21a8;
+        }
+
+    .form-control,
+    .form-select {
+        background-color: #fff;
+        color: #212529;
+        border: 1px solid #ced4da;
+    }
+
+        .form-control::placeholder {
+            color: #6c757d;
+        }
+
+    .input-group-text {
+        background-color: #e9ecef;
+        border: 1px solid #ced4da;
+        color: #495057;
+    }
+
+    .text-danger {
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+
+    .form-label {
+        text-align: left;
+        display: block;
+        width: 100%;
+    }
+</style>
+
+<br />
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">x</button>
+        <i class="bi bi-check-circle"></i>
+        @TempData["MensagemSucesso"]
+    </div>
+}
+
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">x</button>
+        <i class="bi bi-bug"></i>
+        @TempData["MensagemErro"]
+    </div>
+}
+
+<!-- Conteúdo -->
+<div class="text-center">
+    <div class="form-container">
+        <div class="form-title">Alterar senha</div>
+
+        <form asp-controller="AlterarSenha" asp-action="Alterar" method="post">
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label for="senhaAtual" class="form-label">Senha atual</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input type="password" asp-for="SenhaAtual" class="form-control" placeholder="Digite a senha atual" />
+                    </div>
+                    <div class="text-danger">@Html.ValidationMessageFor(x => x.SenhaAtual)</div>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label for="novaSenha" class="form-label">Nova senha</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input type="password" asp-for="NovaSenha" class="form-control" placeholder="Digite a nova senha" />
+                    </div>
+                    <div class="text-danger">@Html.ValidationMessageFor(x => x.NovaSenha)</div>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label for="confirmarNovaSenha" class="form-label">Confirmar nova senha</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input type="password" asp-for="ConfirmarNovaSenha" class="form-control" placeholder="Confirme a nova senha" />
+                    </div>
+                    <div class="text-danger">@Html.ValidationMessageFor(x => x.ConfirmarNovaSenha)</div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Salvar</button>
+            <a class="btn btn-danger" asp-controller="Home" asp-action="Index"><i class="bi bi-x-lg"></i> Cancelar</a>
+        </form>
+    </div>
+</div>

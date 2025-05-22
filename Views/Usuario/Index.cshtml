@@ -1,0 +1,147 @@
+﻿@model List<UsuarioModel>
+
+@{
+    ViewData["Title"] = "Listagem de usuários";
+}
+
+<br />
+
+<div class="text-center">
+    <h1 class="Display-4">Listagem de usuário</h1>
+    <br />
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-primary" role="button" asp-controller="Usuario" asp-action="Criar">
+            <i class="bi bi-plus-lg"></i> Adicionar novo usuário
+        </a>
+    </div>
+
+    <br />
+
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">x</button>
+            <i class="bi bi-check-circle"></i>
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">x</button>
+            <i class="bi bi-bug"></i>
+            @TempData["MensagemErro"]
+        </div>
+
+    }
+
+
+
+
+
+    <br />
+    <table class="table" id="table-usuarios">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>Login</th>
+                <th>E-mail</th>
+                <th>Perfil</th>
+                <th>Total de contatos</th>
+                <th>Data de cadastro</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (UsuarioModel usuario in Model)
+                {
+                    var modalId = $"modalApagar_{usuario.Id}";
+                    <tr>
+                        <th>@usuario.Id</th>
+                        <td>@usuario.Nome</td>
+                        <td>@usuario.Login</td>
+                        <td>@usuario.Email</td>
+                        <td>
+                            @{
+                                var perfil = usuario.Perfil == LinkHub.Enum.PerfilEnum.Administrador
+                                ? "Administrador"
+                                : usuario.Perfil == LinkHub.Enum.PerfilEnum.Gestor
+                                ? "Gestor"
+                                : usuario.Perfil == LinkHub.Enum.PerfilEnum.Supervisor
+                                ? "Supervisor"
+                                : usuario.Perfil == LinkHub.Enum.PerfilEnum.Usuario
+                                ? "Usuário"
+                                : "Desconhecido"; 
+                            }
+                            @perfil
+                        </td>
+                        <td>
+                            <a href="#" usuario-id="@usuario.Id" class="btn btn-success btn-sm btn-total-contatos">
+                                @(usuario.Contatos != null && usuario.Contatos.Any() ? usuario.Contatos.Count() : 0 )
+                            </a>
+                        </td>
+
+                        <td>@usuario.DataCadastro</td>
+                       
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-primary" asp-controller="Usuario" asp-action="Editar" asp-route-id="@usuario.Id">
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                </a>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#@modalId">
+                                    <i class="bi bi-trash3"></i> Apagar
+                                </button>
+                            </div>
+
+                            <!-- Modal de confirmação -->
+                            <div class="modal fade" id="@modalId" tabindex="-1" aria-labelledby="label_@modalId" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="label_@modalId">Confirmar exclusão</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Tem certeza que deseja excluir o contato <strong>@usuario.Nome </strong>?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                <i class="bi bi-x-lg"></i> Cancelar
+                                            </button>
+                                            <form asp-controller="Usuario" asp-action="Apagar" asp-route-id="@usuario.Id" method="post">
+                                                <button type="submit" class="btn btn-danger">
+                                                    <i class="bi bi-trash3"></i> Apagar
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <div id="modalContatosUsuario" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Listagem de contato</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="listaContatosUsuario"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

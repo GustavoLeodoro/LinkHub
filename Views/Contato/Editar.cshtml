@@ -1,0 +1,129 @@
+﻿@model ContatoModel
+
+@{
+    ViewData["Title"] = "Editar contatos";
+}
+
+<!-- Estilos personalizados -->
+<style>
+    body {
+        background-color: #f8f9fa;
+        color: #212529;
+    }
+
+    .form-container {
+        max-width: 600px;
+        margin: 40px auto;
+        background-color: #ffffff;
+        padding: 30px;
+        border: 1px solid #ced4da;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    .form-title {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #6f42c1;
+        margin-bottom: 30px;
+    }
+
+    .btn-purple {
+        background-color: #7c3aed;
+        border-color: #7c3aed;
+        color: white;
+    }
+
+        .btn-purple:hover {
+            background-color: #6b21a8;
+            border-color: #6b21a8;
+        }
+
+    .form-control,
+    .form-select {
+        background-color: #fff;
+        color: #212529;
+        border: 1px solid #ced4da;
+    }
+
+        .form-control::placeholder {
+            color: #6c757d;
+        }
+
+    .input-group-text {
+        background-color: #e9ecef;
+        border: 1px solid #ced4da;
+        color: #495057;
+    }
+</style>
+
+<!-- Conteúdo -->
+<div class="text-center">
+
+    <div class="form-container">
+        <div class="form-title">Editar de Contato</div>
+
+        <form asp-controller="Contato" asp-action="Alterar" method="post">
+           
+            <input type="hidden" asp-for="Id" />
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label for="nome" class="form-label">Nome</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <input type="text" asp-for="Nome" class="form-control" placeholder="João" />
+                        @Html.ValidationMessageFor(x => x.Nome)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="sobrenome" class="form-label">Sobrenome</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <input type="text" asp-for="Sobrenome" class="form-control" placeholder="Silva" />
+                        @Html.ValidationMessageFor(x => x.Sobrenome)
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                    <input type="email" asp-for="Email" class="form-control" placeholder="joao.silva@email.com" />
+                    @Html.ValidationMessageFor(x => x.Email)
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="celular" class="form-label">Celular</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                    <input type="text" asp-for="Celular" class="form-control" placeholder="(11) 98765-4321" />
+                    @Html.ValidationMessageFor(x => x.Celular)
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="endereco" class="form-label">Endereço</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                    <input type="text" asp-for="Endereco" class="form-control" placeholder="Rua Example, 123" />
+                    @Html.ValidationMessageFor(x => x.Endereco)
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="cep" class="form-label">CEP</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                    <input type="text" asp-for="Cep" class="form-control" placeholder="12345678" />
+                    @Html.ValidationMessageFor(x => x.Cep)
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Salvar</button>
+            <a class="btn btn-danger" asp-controller="Contato" asp-action="Index"><i class="bi bi-x-lg"></i> Cancelar</a>
+        </form>
+    </div>
+</div>
